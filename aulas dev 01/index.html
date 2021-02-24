@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en" dir="ltr">
 
 <head>
@@ -7,8 +8,44 @@
 </head>
 
 <body>
+
   <canvas id="folha" width="600" height="500"></canvas>
 
+<script>
+
+  var folhaDesenho = document.getElementById("folha");
+  var areaDesenho = folhaDesenho.getContext("2d");
+
+
+  var larguraCampo = 600;
+  var alturaCampo = 500;
+  var espessuraRede = 5;
+
+  var posicaoBolaX = posicaoBolaY = 10;
+  var diametroBola = 10 ;
+//campo
+  areaDesenho.fillStyle = "#286047";// cor verde
+  areaDesenho.fillRect(0, 0, larguraCampo, alturaCampo);
+//rede
+  areaDesenho.fillStyle = "#ffffff"; // cor branca
+  areaDesenho.fillRect(larguraCampo / 2 - espessuraRede / 2, 0, espessuraRede, alturaCampo);
+//bola
+
+  var contador = 0;
+  while(contador < 50) {
+    areaDesenho.fillRect(posicaoBolaX - diametroBola / 2, posicaoBolaY - diametroBola / 2, diametroBola, diametroBola);
+    posicaoBolaX = posicaoBolaX + 1;
+    posicaoBolaY = posicaoBolaY + 1;
+
+
+  contador = contador  +1;
+
+  }
+
+
+
+
+</script>
 
 
 
