@@ -2,56 +2,49 @@
 
 <html lang="en" dir="ltr">
 
-<head>
-  <meta charset="utf-8">
-  <title>mesa de ping pong</title>
-</head>
+  <head>
+   <meta charset="utf-8">
+   <title>mesa de ping pong</title>
+  </head>
+  <body>
 
-<body>
+    <canvas id="folha" width="600" height="500"></canvas>
 
-  <canvas id="folha" width="600" height="500"></canvas>
+    <script>
+     window.onload = function(){
+       setInterval(executar, 1000 /20);
+      }
+      var posicaoBolaX = posicaoBolaY = 10; // posição inicial da bola
+      function executar (){
+        //var contador = 0;
+        //console.log("segundos" + contador);
+        //contador = contador + 0.00001;
 
-<script>
-
-  var folhaDesenho = document.getElementById("folha");
-  var areaDesenho = folhaDesenho.getContext("2d");
-
-
-  var larguraCampo = 600;
-  var alturaCampo = 500;
-  var espessuraRede = 5;
-
-  var posicaoBolaX = posicaoBolaY = 10;
-  var diametroBola = 10 ;
-//campo
-  areaDesenho.fillStyle = "#286047";// cor verde
-  areaDesenho.fillRect(0, 0, larguraCampo, alturaCampo);
-//rede
-  areaDesenho.fillStyle = "#ffffff"; // cor branca
-  areaDesenho.fillRect(larguraCampo / 2 - espessuraRede / 2, 0, espessuraRede, alturaCampo);
-//bola
-
-  var contador = 0;
-  while(contador < 50) {
-    areaDesenho.fillRect(posicaoBolaX - diametroBola / 2, posicaoBolaY - diametroBola / 2, diametroBola, diametroBola);
-    posicaoBolaX = posicaoBolaX + 1;
-    posicaoBolaY = posicaoBolaY + 1;
+        var folhaDesenho = document.getElementById("folha");
+        var areaDesenho = folhaDesenho.getContext("2d");
 
 
-  contador = contador  +1;
-
-  }
-
-
+        var larguraCampo = 600;
+        var alturaCampo = 500;
+        var espessuraRede = 5;
 
 
-</script>
+        var diametroBola = 10 ;
+        //campo
+        areaDesenho.fillStyle = "#286047";// cor verde
+        areaDesenho.fillRect(0, 0, larguraCampo, alturaCampo);
+        //rede
+        areaDesenho.fillStyle = "#ffffff"; // cor branca
+        areaDesenho.fillRect(larguraCampo / 2 - espessuraRede / 2, 0, espessuraRede, alturaCampo);
+        //bola
+        areaDesenho.fillRect(posicaoBolaX - diametroBola / 2, posicaoBolaY - diametroBola / 2, diametroBola, diametroBola);
 
+        posicaoBolaX = posicaoBolaX + 1;
+        posicaoBolaY = posicaoBolaY + 1;
 
-
-
-
-
-</body>
+        console.log("Tic-tac");
+      }
+    </script>
+  </body>
 
 </html>
