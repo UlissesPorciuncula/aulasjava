@@ -12,9 +12,15 @@
 
     <script>
      window.onload = function(){
-       setInterval(executar, 1000 /20);
+       setInterval(executar, 1000 /30);
       }
       var posicaoBolaX = posicaoBolaY = 10; // posição inicial da bola
+      var velociadeBolaPosicaoX = velociadeBolaPosicaoY = 5;
+
+
+
+
+
       function executar (){
         //var contador = 0;
         //console.log("segundos" + contador);
@@ -24,8 +30,9 @@
         var areaDesenho = folhaDesenho.getContext("2d");
 
 
-        var larguraCampo = 600;
-        var alturaCampo = 500;
+        var larguraCampo = 600;//y de cima para baixo
+        var alturaCampo = 500;//x da esquerda para a direita
+        // sendo a 00 no canto superior esquerdo
         var espessuraRede = 5;
 
 
@@ -38,10 +45,26 @@
         areaDesenho.fillRect(larguraCampo / 2 - espessuraRede / 2, 0, espessuraRede, alturaCampo);
         //bola
         areaDesenho.fillRect(posicaoBolaX - diametroBola / 2, posicaoBolaY - diametroBola / 2, diametroBola, diametroBola);
+// incrementa a posição da bola a cada looping
+        posicaoBolaX = posicaoBolaX + velociadeBolaPosicaoX;
+        posicaoBolaY = posicaoBolaY + velociadeBolaPosicaoY;
 
-        posicaoBolaX = posicaoBolaX + 1;
-        posicaoBolaY = posicaoBolaY + 1;
-
+// verificar lateral superior
+        if (posicaoBolaY < 0 && velociadeBolaPosicaoY <0) {
+          velociadeBolaPosicaoY = -velociadeBolaPosicaoY;
+        }
+//verificação lateral inferior
+        if (posicaoBolaY > alturaCampo && velociadeBolaPosicaoY > 0) {
+         velociadeBolaPosicaoY = -velociadeBolaPosicaoY;
+        }
+        // verificar lateral esquerda
+                if (posicaoBolaX < 0 && velociadeBolaPosicaoX <0) {
+                  velociadeBolaPosicaoX = -velociadeBolaPosicaoX;
+                }
+        //verificação lateral direita
+                if (posicaoBolaX > larguraCampo && velociadeBolaPosicaoX > 0) {
+                 velociadeBolaPosicaoX = -velociadeBolaPosicaoX;
+                }
         console.log("Tic-tac");
       }
     </script>
