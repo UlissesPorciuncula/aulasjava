@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html  lang="pt-br">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Mouse</title>
+    <script type="text/javascript">
+        //
+        //Alerta! Não foi testado com IE8-, só com IE9+. Os outros browsers estão OK!
+        //
+        var ultX = 0, ultT, percentualConcluido = 0, meuDiv, meuMenu, meuMenuLeft,
+            alcancouOCursor = true, primeiraVez = true;
+        //prepara algumas funções necessárias para animação, temporização e localização
+        if (!window.requestAnimationFrame) {
+            window.requestAnimationFrame = (window.webkitRequestAnimationFrame ||
+                window.mozRequestAnimationFrame ||
+                window.oRequestAnimationFrame ||
+                window.msRequestAnimationFrame ||
+                function (callback) { return window.setTimeout(function () { return callback(+new Date()); }, 1000 / 60); });
+        }
+        if (!Date.now)
+            Date.now = function () { return (+new Date()); };
+        function elementLeft(element) {
+            //https://github.com/carlosrafaelgn/GraphicalFilterEditor/blob/master/Common.js
+            var left;
+            if (element.getBoundingClientRect) {
+                left = element.getBoundingClientRect();
+                left = left.left + window.pageXOffset;
+            } else {
+                left = 0;
+                while (element) {
+                    left += element.offsetLeft;
+                    element = element.offsetParent;
+                }
+            }
+            return left;
+        }
+
+        function meuMenu_MouseEnter(e) {
+            //armazena a coordenada X (relativa a meuMenu) para animar
+            ultX = e.pageX - meuMenuLeft;
+            //não deixa meuDiv passar do fim de meuMenu
+            if (ultX > (meuMenu.clientWidth - 45))
+                ultX = (meuMenu.clientWidth - 45);
+            //
+            //esse bloco if/else pode ser removido, caso desejado...
+            //
+            if (primeiraVez) {
+                primeiraVez = false;
+            } else {
+                //determina se realmente é necessário iniciar uma animação,
+                //conforme a distância entre o cursor e meuDiv
+                var meuDivLeft = elementLeft(meuDiv) - meuMenuLeft;
+                if (Math.abs(meuDivLeft - ultX) < 50)
+                    return true;
+            }
+            //reinicia a animação
+            alcancouOCursor = false;
+            ultT = Date.now();
+            requestAnimationFrame(animaDiv);
+            return true;
+        }
+
+        function meuMenu_MouseMove(e) {
+            //armazena a coordenada X (relativa a meuMenu) para animar
+            ultX = e.pageX - meuMenuLeft;
+            //não deixa meuDiv passar do fim de meuMenu
+            if (ultX > (meuMenu.clientWidth - 45))
+                ultX = (meuMenu.clientWidth - 45);
+            if (alcancouOCursor) {
+                //não há necessidade de animar, apenas define a posição
+                meuDiv.style.left = ultX + "px";
+            }
+            return true;
+        }
+
+        //essa função vai animar a posição do div de uma forma não muito brusca
+        function animaDiv() {
+            //ver comentário dentro da função document_MouseMove
+            if (alcancouOCursor)
+                return;
+
+            //Date.now() retorna um tempo em milissegundos, por isso divide por 1000
+            var agora = Date.now(), deltaT = (agora - ultT) / 1000, meuDivLeft, velocidade;
+            ultT = agora;
+            requestAnimationFrame(animaDiv);
+
+            //obtém a coordenada left de meuDiv, relativo a meuMenu
+            meuDivLeft = elementLeft(meuDiv) - meuMenuLeft;
+
+            //é possível ajustar a velocidade alterando os coeficientes aqui!!!
+            velocidade = Math.abs(ultX - meuDivLeft) * 5;
+            if (velocidade > 2000)
+                velocidade = 2000;
+            else if (velocidade < 100)
+                velocidade = 100;
+
+            //anima o div, conforme a velocidade
+            if (meuDivLeft < ultX) {
+                meuDivLeft += velocidade * deltaT;
+                if (meuDivLeft >= ultX) {
+                    alcancouOCursor = true;
+                    meuDivLeft = ultX;
+                }
+            } else {
+                meuDivLeft -= velocidade * deltaT;
+                if (meuDivLeft <= ultX) {
+                    alcancouOCursor = true;
+                    meuDivLeft = ultX;
+                }
+            }
+            meuDiv.style.left = meuDivLeft + "px";
+        }
+    </script>
+</head>
+<body>
+    <!-- apenas um exemplo -->
+    <div id="meuMenu" style="position: relative; height: 45px; background: #00f; color: #fff;">
+        <span>Item A</span> | <span>Item B</span> | <span>Item C</span> | <span>Item D</span>
+        <div id="meuDiv" style="position: absolute; width: 45px; height: 5px; bottom: 0px; background: #fff;"></div>
+    </div>
+    <script type="text/javascript">
+        meuMenu = document.getElementById("meuMenu");
+        meuDiv = document.getElementById("meuDiv");
+        //armazena left de meuMenu, para evitar ficar utilizando a função elementLeft toda a vez
+        meuMenuLeft = elementLeft(meuMenu);
+        //trata o evento do movimento do cursor na fase de captura
+        meuMenu.addEventListener("mouseenter", meuMenu_MouseEnter, true);
+        meuMenu.addEventListener("mousemove", meuMenu_MouseMove, true);
+    </script>
+</body>
+</html>

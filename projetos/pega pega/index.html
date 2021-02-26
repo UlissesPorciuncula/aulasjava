@@ -1,0 +1,68 @@
+<script>
+  window.onload = function()  {
+    // inicia as definições do jogador
+    inicializar();
+    //executa repetidamente 30 a cada  segundo
+    setInterval(principal, 1000 / 30);
+  }
+
+  function inicializar() {
+    folhaDesenho = document.createElement('canvas');
+    folhaDesenho.height = 600;
+    folhaDesenho.width =500;
+    areaDesenho = folhaDesenho.getContext("2d");
+    document.body.appendChild(folhaDesenho);
+
+    //definições do campo
+    alturaCampo = folhaDesenho.height;//y de cima para baixo
+    larguraCampo = folhaDesenho.width;//x da esquerda para a direita
+
+
+
+     Bola = diametroBola = 10; // Dimensões da bola
+// mouse segue a bola
+    folhaDesenho.addEventListener('mousemove', function(e) {
+      Bola = e.clientY && e.clientX ;
+    });
+
+  }
+
+  function principal(){
+    //calcular(); //a cada quadro calcula
+    desenhar(); // a cada quadro desenha
+  }
+
+  function desenhar() {
+    //desenha a cor dp campo
+    areaDesenho.fillStyle = "#286047"; // cor verde
+
+    //desenha o campo
+    areaDesenho.fillRect(0, 0, larguraCampo, alturaCampo);
+
+    //define cor principal area de trabalho
+    areaDesenho.fillStyle = "#ffffff"; // cor branca
+
+    // desenhar rede
+    //areaDesenho.fillRect(larguraCampo / 2 - espessuraRede / 2, 0, espessuraRede, alturaCampo);
+
+    //desenhar raquetes
+    //areaDesenho.fillStyle = "#FF0000"; // cor vermelho
+    //areaDesenho.fillRect(0, posicaoJogador1, espessuraRaquete, alturaRaquete);
+
+    //areaDesenho.fillStyle = "#FF00FF"; // cor rosa
+    //areaDesenho.fillRect(larguraCampo - espessuraRaquete, posicaoJogador2, espessuraRaquete, alturaRaquete);
+
+    //desenhar a bola
+    areaDesenho.fillStyle = "#ffff00"; // cor amarelo
+    areaDesenho.fillRect(Bola - diametroBola / 2, Bola - diametroBola / 2, diametroBola, diametroBola );
+
+    // Escreve as pontuações
+    //areaDesenho.font="15px Arial";
+    //areaDesenho.fillText("HUMANO - " + pontuacaoJogador1 + " pontos", 50, 100);
+    //areaDesenho.fillText("COMPUTADOR - " + pontuacaoJogador2 + " pontos", larguraCampo - 200, 100);
+  }
+
+
+
+
+</script>

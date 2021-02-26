@@ -13,14 +13,15 @@ window.onload = function() {
 
 function inicializar() {
   // Posições iniciais dos jogadores
-  posicaoJogador1 = posicaoJogador2 = 40;
+  posicaoJogador1 = 500;
+  posicaoJogador2 = 40; // definifo a posição y altura
 
   // Pontuações iniciais dos jogadores
   pontuacaoJogador1 = pontuacaoJogador2 = 0;
 
   // Dimensões das raquetes
-  espessuraRaquete = 11;
-  alturaRaquete =100 ;
+  espessuraRaquete = 11; // valor escala x
+  alturaRaquete =50 ; // valor escala y
 
   // Efeito da raquete ao bater
   efeitoRaquete = 0.3;
@@ -33,7 +34,7 @@ function inicializar() {
   diametroBola = 50;
 
   // Velocidade da bola
-  velocidadeBolaPosicaoX = velocidadeBolaPosicaoY = 5;
+  velocidadeBolaPosicaoX = velocidadeBolaPosicaoY = 1;
 
   // Velocidade de resposta do jogador 2
   velocidadeJogador2 = 25;
@@ -51,9 +52,9 @@ function inicializar() {
   larguraCampo = folhaDesenho.width;//x da esquerda para a direita
 
   // Função que altera a posição do Jogador 1 de acordo com o mouse
-  //folhaDesenho.addEventListener('mousemove', function(e) {
-  //  posicaoJogador1 = e.clientY - alturaRaquete / 2;
-  //});
+  folhaDesenho.addEventListener('mousemove', function(e) {
+    posicaoJogador1 = e.clientY - alturaRaquete / 2;
+  });
 }
 
 function principal(){
@@ -106,11 +107,11 @@ function calcular() {
   }
 
   //atualizar posição do jogador 1 que é o pc
-  if(posicaoJogador1 + alturaRaquete  < posicaoBolaY) {
-    posicaoJogador1 += velocidadeJogador1;
-  } else {
-    posicaoJogador1 -= velocidadeJogador1;
-  }
+  //if(posicaoJogador1 + alturaRaquete  < posicaoBolaY) {
+  //  posicaoJogador1 += velocidadeJogador1;
+//  } else {
+  //  posicaoJogador1 -= velocidadeJogador1;
+  //}
 
 }
 

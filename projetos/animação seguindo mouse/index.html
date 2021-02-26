@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>siga o cursor</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <h2> Ulisses & Porciuncula  </h2>
+
+    <div id="cursor"> </div>
+
+    <script>
+      var cursor = document.getElementById('cursor');
+      document.addEventListener('mousemove', function(e) {
+      var x = e.clientX;
+      var y = e.clientY;
+      cursor.style.left = x + "px";
+      cursor.style.top  = y + "px";
+      });
+
+    </script>
+
+
+
+
+
+
+  </body>
+</html>
